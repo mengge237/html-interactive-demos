@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>magnetic</title>
+    <script src="js/gsap.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 1vmin;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100dvh;
+            background-color: #686868;
+            overflow: hidden;
+        }
+
+        .container{
+            position: absolute;
+            width: 50rem;
+            height: 50rem;
+            overflow: visible;
+        }
+
+        .container line{
+            fill: none;
+            stroke: #f7f7f7;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <svg class="container"></svg>
+</body>
+
+<script>
+
+    const magnetic = {
+        container: document.querySelector(".container"),
+        width: 0,
+        height: 0,
+        left: 0,
+        top: 0,
+        lines: 10,
+        rows: 10,
+        balls: [],
+        mouse_radius: 100,
+        init(){
+            this.resize();
+            this.create(10);
+            document.addEventListener("mousemove", (e) => {
+                this.move_balls(e.x, e.y);
+            })
+        },
+        resize(){
+            this.width = this.container.getBoundingClientRect().width;
+            this.height = this.container.getBoundingClientRect().height;
+            this.left = this.container.getBoundingClientRect().left;
+            this.top = this.container.getBoundingClientRect().top;
+        },
+        create(radius){
+            for(let i = 0; i <= this.rows; i++){
+                for(let j = 0; j <= this.lines; j++){
+                    let x = this.width / this.lines * j;
+                    let y = this.height / this.rows * i;
+                    const ball = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    ball.setAttribute("fill", "#17f700");
+                    ball.setAttribute("cx", x);
+                    ball.setAttribute("cy", y);
+                    ball.setAttribute("r", radius);
+                    const point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    point.setAttribute("fill", "#f7f7f7");
+                    point.setAttribute("cx", x);
+                    point.setAttribute("cy", y);
+                    point.setAttribute("r", radius / 5);
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", x);
+                    line.setAttribute("y1", y);
+                    line.setAttribute("x2", x);
+                    line.setAttribute("y2", y);
+                    line.setAttribute("stroke-width","2");
+
+                    this.container.appendChild(line);
+                    this.container.appendChild(point);
+                    this.container.appendChild(ball);
+
+                    ball.line = line;
+                    ball.ori_x = x;
+                    ball.ori_y = y;
+
+                    this.balls.push(ball);
+                }
+            }
+        },
+        move_balls(x, y){
+            this.balls.forEach(ball => {
+                const mouse_x = x - this.left;
+                const mouse_y = y - this.top;
+                const dx = ball.ori_x - mouse_x;
+                const dy = ball.ori_y - mouse_y;
+                const distance = Math.sqrt(dx ** 2 + dy ** 2);
+
+                if(distance <= this.mouse_radius){
+                    ball.move_x = mouse_x + dx / distance * this.mouse_radius;
+                    ball.move_y = mouse_y + dy / distance * this.mouse_radius;
+
+                    if(ball.animater) ball.animater.kill();
+
+                    ball.animater = gsap.timeline()
+                        .to(ball, {
+                            attr:{
+                                cx: ball.move_x,
+                                cy: ball.move_y,
+                            },
+                            duration: 0.5,
+                            ease: "power3.out",
+                        })
+                        .to(ball.line, {
+                            attr:{
+                                x2: ball.move_x,
+                                y2: ball.move_y,
+                            },
+                            duration: 0.5,
+                            ease: "power3.out",
+                        },"<")
+                        .to(ball, {
+                            attr:{
+                                cx: ball.ori_x,
+                                cy: ball.ori_y,
+                            },
+                            duration: 1,
+                            ease: "power3.out",
+                        },"<0.1")
+                        .to(ball.line, {
+                            attr:{
+                                x2: ball.ori_x,
+                                y2: ball.ori_y,
+                            },
+                            duration: 1,
+                            ease: "power3.out",
+                        },"<")
+                }
+            });
+        }
+    };
+    magnetic.init();
+</script>
+</html>

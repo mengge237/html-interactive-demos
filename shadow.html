@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/shadow.css">
+</head>
+<body>
+    <div id="text">Shadow</div>
+    <div id="light"></div>
+    <script>
+        let text = document.getElementById("text");
+        let light = document.getElementById("light");
+        document.addEventListener("mousemove", (e) => {
+            let x = e.clientX;
+            let y = e.clientY;
+            light.style.left = x + "px";
+            light.style.top = y + "px";
+
+            let distanceX = x - text.offsetLeft - text.offsetWidth / 2;
+            let distanceY = y - text.offsetTop - text.offsetHeight / 2;
+
+            let newShadow = "";
+            for(var i=0; i<200; i++){
+                let shadowX = -distanceX * (i / 200);
+                let shadowY = -distanceY * (i / 200);
+                let opacity = 1 - (i / 100);
+                newShadow += (newShadow ? "," : "") + `${shadowX}px ${shadowY}px 0 rgba(33,33,33,${opacity})`;
+            }
+            text.style.textShadow = newShadow;
+            // let centerX = text.offsetLeft + text.offsetWidth / 2;
+            // let centerY = text.offsetTop + text.offsetHeight / 2;
+            // let deltaX = centerX - x;
+            // let deltaY = centerY - y;
+            // let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            // let maxDistance = 300;
+            // if (distance > maxDistance) distance = maxDistance;
+            // let shadowX = (deltaX / distance) * (maxDistance - distance) / 10;
+            // let shadowY = (deltaY / distance) * (maxDistance - distance) / 10;
+            // text.style.textShadow = `${shadowX}px ${shadowY}px 0 rgba(33,33,33,1)`;
+        });
+    </script>
+</body>
+</html>

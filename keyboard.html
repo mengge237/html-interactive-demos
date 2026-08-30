@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/keyboard.css">
+</head>
+<body>
+    <div class="output"></div>
+    <script>
+        let output = document.querySelector('.output');
+        document.addEventListener('keydown',(event) => {
+            if(event.key === "Backspace"){
+                if(output.lastElementChild){
+                    output.removeChild(output.lastElementChild);
+                }
+                event.preventDefault();
+            } else if(event.key.length === 1){
+                let keyDiv = document.createElement('div');
+                keyDiv.classList.add('key');
+                let iElem = document.createElement('i');
+                iElem.textContent = event.key;
+                keyDiv.appendChild(iElem);
+                output.appendChild(keyDiv);
+            }
+        });
+    </script>
+</body>
+</html>

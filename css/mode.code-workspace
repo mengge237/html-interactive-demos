@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../mode"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Visual Studio"
+	}
+}

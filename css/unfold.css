@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #2f364f;
+}
+
+div{
+    width: 640px;
+    height: 360px;
+    display: flex;
+    transition: 0.5s;
+    transform: rotate(-25deg) skew(25deg) translate(0,0);
+}
+
+div:hover{
+    transform: rotate(-25deg) skew(-25deg) translate(0,-20px);
+}
+
+div span{
+    list-style: none;
+    width: 25%;
+    background: url(/img/bac\ 1.png);
+    background-position: calc(-160px * var(--i));
+    background-size: cover;
+    height: 100%;
+    transition: 0.5s;
+    border-top: 5px solid #fff;
+    border-bottom: 5px solid #fff;
+}
+
+div:hover span:nth-child(odd){
+    transform: skewY(25deg);
+    box-shadow: inset 20px 0 50px rgba(0,0,0,0.5);
+}
+
+div:hover span:nth-child(even){
+    transform: skewY(-25deg);
+    box-shadow: inset -20px 0 50px rgba(0,0,0,0.5);
+}
+
+div span:first-child{
+    border-left: 5px solid #fff;
+}
+
+div span:last-child{
+    border-right: 5px solid #fff;
+}

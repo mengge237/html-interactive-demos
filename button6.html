@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>霓虹边框按钮</title>
+    <link rel="stylesheet" href="css/button6.css">
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="btn">
+            <span>Button</span>
+            <div class="inner"></div>
+        </a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.querySelector('.btn');
+            
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const inner = this.querySelector('.inner');
+                if (inner) {
+                    inner.style.setProperty('--mouseX', `${x}px`);
+                    inner.style.setProperty('--mouseY', `${y}px`);
+                }
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                const inner = this.querySelector('.inner');
+                if (inner) {
+                    inner.style.setProperty('--mouseX', '50%');
+                    inner.style.setProperty('--mouseY', '50%');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

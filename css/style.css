@@ -1,0 +1,226 @@
+:root{
+    --slider-count:4;
+    --slider-width:200px;
+    --slider-height:400px;
+    --gap:7px;
+    --time:15s;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+img{
+    display:block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body{
+    height: 100vh;
+    font-family: 'Douyin Sans';
+}
+
+section{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    place-items: center;
+    height: 100vh;
+    background: #2e2e70;
+    overflow: hidden;
+}
+
+.sliders{
+    display: flex;
+    gap: 35px;
+    transform: rotate(8deg);
+}
+
+.slider-container{
+    width: var(--slider-width);
+    height: 100vh;
+    background: transparent;
+    position: relative;
+}
+
+.slider-track{
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    animation: moveup calc(var(--time) * var(--slider-count)) linear infinite;
+}
+
+
+#slider2 .slider-track{
+    animation: movedown calc(var(--time) * var(--slider-count)) linear infinite;
+}
+
+.slide{
+    height: var(--slider-height);
+    width: var(--slider-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(255,255,255,0.1),
+    transparent, rgba(255,255,255,0.1));
+    border-radius: 120px;
+    margin: var(--gap) 0;
+    padding: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.slide img{
+    border-radius: inherit;
+}
+
+@keyframes moveup{
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(calc(-1 * var(--slider-count) * (var(--slider-height)
+        + var(--gap) * 2)));
+    }
+}
+
+@keyframes movedown{
+    0%{
+        transform: translateY(calc(-1 * var(--slider-count) * (var(--slider-height)
+        + var(--gap) * 2)));
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+
+.content{
+    color: rgb(207,207,207);
+    padding-left: 80px;
+}
+
+.content h1{
+    width: max-content;
+    font-size: clamp(2rem,5vw,7rem);
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    background: #fff;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.content p{
+    font-size: clamp(1rem,2vw,1.4rem);
+    font-weight: 500;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+button{
+    background-color: #21ad67;
+    color: #fff;
+    box-shadow:#21ad67 0 0 0 0;
+    padding: 15px 30px;
+    margin-top: 40px;
+    border: 0;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.5 ease;
+    cursor: pointer;
+}
+
+button:hover,
+button:active{
+    box-shadow: #21ad67 0 4px 20px 0;
+    transform: translateY(3px);
+    transform: 0.1s;
+}
+
+@media (max-width:1500px){
+    :root
+    {
+    --slider-width:180px;
+    --slider-height:350px;
+    }
+    section
+    {
+        grid-template-columns: 45% 55%;
+    }
+    .sliders{
+        gap: 15px;
+    }
+}
+@media (max-width:1200px){
+    :root
+    {
+    --slider-width:150px;
+    --slider-height:300px;
+    }
+    section
+    {
+        grid-template-columns: 40% 60%;
+    }
+    .content{
+        padding-left: 60px;
+    }
+}
+@media (max-width:850px){
+    :root
+    {
+    --slider-width:180px;
+    --slider-height:350px;
+    }
+    section
+    {
+        grid-template-columns: 100%;
+    }
+    .sliders{
+        gap: 35px;
+    }
+    .content{
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background: rgba(0,0,0,0.7);
+        padding: 40px;
+        border-radius: 30px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        color: #e3e2e5;
+    }
+    .content p{
+        line-height: 1.3;
+    }
+}
+@media (max-width:650px){
+    :root
+    {
+    --slider-width:150px;
+    --slider-height:300px;
+    }
+    .sliders{
+        gap: 15px;
+    }
+    .button{
+        margin-top: 25px;
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+}
+@media (max-width:350px){
+    .content p{
+        line-height: 30px;
+    }
+}
